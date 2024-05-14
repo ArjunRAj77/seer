@@ -3,14 +3,18 @@ import pymongo
 import pandas as pd
 from pymongo.server_api import ServerApi
 from pymongo.mongo_client import MongoClient
+import os
 
 
 st.set_page_config(page_title="S.E.E.R", page_icon="⚕️")
 @st.cache_resource
 def init_connection():
-    pwd = st.secrets["db_password"]
-    username = st.secrets["db_username"]
-    host = st.secrets["db_host"]
+    # pwd = st.secrets["db_password"]
+    # username = st.secrets["db_username"]
+    # host = st.secrets["db_host"]
+    pwd=os.environ.get("DBPASSWORD")
+    username=os.environ.get("DBUSERNAME")
+    host=os.environ.get("DBHOST")
     uri = f"mongodb+srv://{username}:{pwd}@{host}/?retryWrites=true&w=majority"
     return pymongo.MongoClient(uri, server_api=ServerApi('1'))
 
