@@ -23,12 +23,9 @@ st.set_page_config(page_title="S.E.E.R", page_icon="⚕️")
 # Function to connect to the MongoDB Instance.
 @st.cache_resource
 def init_connection():
-    # pwd=st.secrets["db_password"]
-    # username=st.secrets["db_username"]
-    # host=st.secrets["db_host"]
-    pwd=os.environ.get("DBPASSWORD")
-    username=os.environ.get("DBUSERNAME")
-    host=os.environ.get("DBHOST")
+    pwd = os.environ.get("DBPASSWORD") or st.secrets["db_password"]
+    username = os.environ.get("DBUSERNAME") or st.secrets["db_username"]
+    host = os.environ.get("DBHOST") or st.secrets["db_host"]
     uri = f"mongodb+srv://{username}:{pwd}@{host}/?retryWrites=true&w=majority"
     return pymongo.MongoClient(uri, server_api=ServerApi('1'))
 
